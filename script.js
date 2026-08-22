@@ -23,8 +23,7 @@ function animate(){
     })
 }
 
-let identityList = ["Software Developer", "Math/CS Teacher", 
-    "Programming Enthusiast", "Basketball Player", "Violinist", "Wrestler"]
+let identityList = ["Software Developer", "CMU Student", "Agentic Enthusiast"]
 let identitySpan = document.querySelector(".identity-list");
 
 let animText = () => {
