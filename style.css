@@ -1,0 +1,230 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Abel", sans-serif;
+    scroll-behavior: smooth;
+}
+
+body{
+    cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>'), auto;
+    background: #1f242d;
+}
+
+nav {
+    background-color: #1f242d;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin: 0 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+nav ul li a::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: width 0.3s;
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+}
+
+nav ul li a:hover {
+    color: #ff7f50;
+}
+
+nav ul li a:hover::after {
+    width: 100%;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow-x: hidden;
+    padding: 60px 24px;
+}
+
+.hero {
+    min-height: 100vh;
+    padding-top: 100px;
+}
+
+h1 {
+    position: relative;
+    font-size: 80px;
+    color: #fff;
+}
+
+p {
+    position: relative;
+    font-size: 35px;
+    font-weight: 600;
+}
+
+.section-heading {
+    position: relative;
+    font-size: 64px;
+    color: #fff;
+    margin-bottom: 32px;
+}
+
+.identity-list::before {
+    position: absolute;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background-color: #1f242d;;
+    top: 0;
+    left: 0;
+    animation: anim 4s infinite;
+}
+
+@keyframes anim {
+    40%, 60% {
+        left: calc(100% + 8px)
+    }
+    100% {
+        left: 0
+    }
+}
+
+.reveal .animate {
+    opacity: 0;
+    filter: blur(5px);
+    transition: 0.7s;
+}
+
+.reveal.show-animate .animate {
+    opacity: 1;
+    filter: blur(0);
+}
+
+.section-link{
+    text-decoration: underline;
+}
+
+/*pop up*/
+.pop-up .animate {
+    transform: scale(.7);
+}
+
+.pop-up.show-animate .animate {
+    transform: scale(1);
+}
+
+.pop-up-hover {
+    transition: transform 0.3s ease;
+}
+
+.pop-up-hover:hover {
+    transform: scale(1.1);
+}
+
+
+/*left to right*/
+.left-to-right .animate {
+    transform: translateX(-100%);
+}
+
+.left-to-right.show-animate .animate {
+    transform: translateX(0);
+}
+
+/*left to right*/
+.right-to-left .animate {
+    transform: translateX(100%);
+}
+
+.right-to-left.show-animate .animate {
+    transform: translateX(0);
+}
+
+.pop-up p, .left-to-right p, .right-to-left p{
+    color: #ff7f50;
+}
+
+.experience {
+    padding-top: 80px;
+}
+
+.timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+    width: 100%;
+    max-width: 640px;
+}
+
+.timeline-item {
+    text-align: left;
+    padding: 18px 26px;
+    border-left: 3px solid #ff7f50;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 6px;
+}
+
+.timeline-item h3 {
+    position: relative;
+    font-size: 26px;
+    color: #fff;
+    display: inline-block;
+}
+
+.timeline-date {
+    display: block;
+    margin-top: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff7f50;
+}
+
+.gallery .images img {
+    max-width: 400px;
+    margin: 0 30px;
+    transform: translateX(-100%);
+    /*delayed*/
+    transition-delay: calc(.2s * var(--i));
+}
+
+.gallery.show-animate .images img {
+    transform: translateX(0);
+}
+
+/*left to right*/
+.gallery .animate {
+    transform: translateX(-100%);
+}
+
+.gallery.show-animate .animate {
+    transform: translateX(0);
+}
