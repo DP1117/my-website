@@ -1,0 +1,4 @@
+.DS_Store
+
+# full-size originals - the site only needs the resized copies in images/
+images_original/
