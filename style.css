@@ -218,7 +218,7 @@ p {
 /* every measurement below is a ratio of the cover, so the whole shelf
    shrinks to fit short viewports and the caption stays above the fold */
 .coverflow {
-    --cf-size: min(560px, 77vh - 170px);
+    --cf-size: min(660px, 76vh - 140px);
     position: relative;
     width: 100%;
     /* cover + the shortened reflection under it */
@@ -322,8 +322,10 @@ p {
     right: max(12px, 50% - var(--cf-size) * 1.15);
 }
 
-/* sits after .coverflow so it stays clear of the stage */
+/* hidden, but still filled in by layout() - data-title stays on each cover
+   and feeds the full screen viewer's alt text. Drop this line to show it */
 .cf-caption {
+    display: none;
     margin-top: 14px;
     font-size: 36px;
     font-weight: 700;
@@ -334,7 +336,7 @@ p {
 
 @media (max-width: 700px) {
     .coverflow {
-        --cf-size: min(320px, 68vh - 140px);
+        --cf-size: min(360px, 70vh - 110px);
     }
 
     .cf-nav svg {
