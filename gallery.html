@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <nav>
+        <ul>
+            <li><a href="index.html#home">Home</a></li>
+            <li><a href="index.html#experience">Experience</a></li>
+            <li><a href="gallery.html">Gallery</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="coverflow">
+            <div class="cf-stage">
+                <!-- one .cf-item per photo -->
+                <div class="cf-item" data-title="Photo 1">
+                    <img src="images/img1.jpg" alt="Photo 1" loading="lazy">
+                </div>
+                <div class="cf-item" data-title="Photo 2">
+                    <img src="images/img1.jpg" alt="Photo 2" loading="lazy">
+                </div>
+                <div class="cf-item" data-title="Photo 3">
+                    <img src="images/img1.jpg" alt="Photo 3" loading="lazy">
+                </div>
+                <div class="cf-item" data-title="Photo 4">
+                    <img src="images/img1.jpg" alt="Photo 4" loading="lazy">
+                </div>
+                <div class="cf-item" data-title="Photo 5">
+                    <img src="images/img1.jpg" alt="Photo 5" loading="lazy">
+                </div>
+            </div>
+        </div>
+
+        <div class="cf-caption"></div>
+    </section>
+
+    <script src="script.js"></script>
+    <script src="gallery.js"></script>
+</body>
+
+</html>

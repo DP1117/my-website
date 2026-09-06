@@ -34,5 +34,7 @@ let animText = () => {
     }
 }
 
-animText();
-setInterval(animText, identityList.length * 4000);
+if (identitySpan) {
+    animText();
+    setInterval(animText, identityList.length * 4000);
+}

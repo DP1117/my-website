@@ -96,6 +96,7 @@ p {
     font-size: 64px;
     color: #fff;
     margin-bottom: 32px;
+    transition: color 0.3s ease;
 }
 
 .identity-list::before {
@@ -131,6 +132,11 @@ p {
 
 .section-link{
     text-decoration: underline;
+    color: inherit;
+}
+
+.section-link:hover h3 {
+    color: #ff7f50;
 }
 
 /*pop up*/
@@ -208,23 +214,70 @@ p {
     color: #ff7f50;
 }
 
-.gallery .images img {
-    max-width: 400px;
-    margin: 0 30px;
-    transform: translateX(-100%);
-    /*delayed*/
-    transition-delay: calc(.2s * var(--i));
+/*gallery page - cover flow*/
+/* every measurement below is a ratio of the cover, so the whole shelf
+   shrinks to fit short viewports and the caption stays above the fold */
+.coverflow {
+    --cf-size: min(560px, 77vh - 170px);
+    position: relative;
+    width: 100%;
+    /* cover + the shortened reflection under it */
+    height: calc(var(--cf-size) * 1.3);
+    perspective: calc(var(--cf-size) * 3.125);
+    perspective-origin: 50% 34%;
+    touch-action: pan-y;
 }
 
-.gallery.show-animate .images img {
-    transform: translateX(0);
+.cf-stage {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    /* stage plane sits at z:0, in front of the fanned-back photos, and would swallow their clicks */
+    pointer-events: none;
 }
 
-/*left to right*/
-.gallery .animate {
-    transform: translateX(-100%);
+.cf-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--cf-size);
+    height: var(--cf-size);
+    margin: calc(var(--cf-size) * -0.588) 0 0 calc(var(--cf-size) * -0.5);
+    cursor: pointer;
+    transition: transform 0.55s cubic-bezier(.25, .8, .25, 1), opacity 0.55s ease;
 }
 
-.gallery.show-animate .animate {
-    transform: translateX(0);
+.cf-item img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 3px;
+    box-shadow: 0 18px 36px rgba(0, 0, 0, 0.55);
+    /* mask cuts the reflection off at ~24% of the cover, just above the caption */
+    -webkit-box-reflect: below 6px linear-gradient(transparent 76%, rgba(0, 0, 0, 0.35));
+}
+
+.cf-item.is-active img {
+    box-shadow: 0 22px 46px rgba(0, 0, 0, 0.75);
+}
+
+/* sits after .coverflow so it stays clear of the stage */
+.cf-caption {
+    margin-top: 14px;
+    font-size: 36px;
+    font-weight: 700;
+    /* Abel ships a single weight, so thicken the strokes ourselves */
+    -webkit-text-stroke: 0.6px currentColor;
+    color: #ff7f50;
+}
+
+@media (max-width: 700px) {
+    .coverflow {
+        --cf-size: min(320px, 68vh - 140px);
+    }
+
+    .cf-caption {
+        font-size: 28px;
+    }
 }
