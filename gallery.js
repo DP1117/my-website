@@ -4,8 +4,22 @@ let caption = document.querySelector(".cf-caption");
 let coverflow = document.querySelector(".coverflow");
 let prev = document.querySelector(".cf-prev");
 let next = document.querySelector(".cf-next");
+let lightbox = document.querySelector(".cf-lightbox");
+let lightboxImg = document.querySelector(".cf-lightbox-img");
 
-let active = Math.floor(items.length / 2);
+// deal the deck in a fresh order every visit, then open on the first cover
+let shuffle = () => {
+    for (let i = items.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [items[i], items[j]] = [items[j], items[i]];
+    }
+
+    items.forEach(item => stage.appendChild(item));
+}
+
+shuffle();
+
+let active = 0;
 // covers shown either side of the centre one - 2 + 1 + 2 = 5 on screen
 let reach = 2;
 // how far past those to fetch ahead, and how far out to drop a cover again
@@ -51,6 +65,9 @@ let layout = () => {
 
     prev.disabled = active === 0;
     next.disabled = active === items.length - 1;
+
+    // arrow keys keep the open viewer in step with the deck
+    if (!lightbox.hidden) showFull();
 }
 
 let go = (index) => {
@@ -58,10 +75,53 @@ let go = (index) => {
     layout();
 }
 
+// press the centre cover to see the photo full size
+let showFull = () => {
+    let item = items[active];
+
+    lightboxImg.src = item.querySelector("img").dataset.full;
+    lightboxImg.alt = item.dataset.title;
+}
+
+let openLightbox = () => {
+    showFull();
+    lightbox.hidden = false;
+    // nothing behind the viewer should move while it is up
+    document.body.style.overflow = "hidden";
+    // paint the closed state first, otherwise there is nothing to fade from
+    requestAnimationFrame(() => lightbox.classList.add("is-open"));
+}
+
+let closeLightbox = () => {
+    if (lightbox.hidden) return;
+
+    lightbox.classList.remove("is-open");
+
+    setTimeout(() => {
+        if (lightbox.classList.contains("is-open")) return;
+
+        lightbox.hidden = true;
+        document.body.style.overflow = "";
+        // hand the full size photo back rather than hold it in memory
+        lightboxImg.removeAttribute("src");
+    }, 300);
+}
+
+lightbox.addEventListener("click", (e) => {
+    if (e.target !== lightboxImg) closeLightbox();
+})
+
 prev.addEventListener("click", () => go(active - 1));
 next.addEventListener("click", () => go(active + 1));
 
 document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeLightbox();
+    // enter presses the cover facing you, and presses back out once open,
+    // unless a button has the focus and is about to be clicked anyway
+    if (e.key === "Enter" && !e.target.closest?.("button")) {
+        if (lightbox.hidden) openLightbox();
+        else closeLightbox();
+    }
     if (e.key === "ArrowLeft") go(active - 1);
     if (e.key === "ArrowRight") go(active + 1);
 })
@@ -84,7 +144,12 @@ coverflow.addEventListener("pointerup", (e) => {
     }
 
     let item = e.target.closest(".cf-item");
-    if (item) go(items.indexOf(item));
+    if (!item) return;
+
+    let index = items.indexOf(item);
+    // the one already facing you opens; the rest step into place
+    if (index === active) openLightbox();
+    else go(index);
 })
 
 window.addEventListener("resize", layout);
