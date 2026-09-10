@@ -1,227 +1,564 @@
-@import url('https://fonts.googleapis.com/css2?family=Abel&display=swap');
+/* ---------------------------------------------------------------------------
+   The whole site is one iPod classic screen: a fixed status bar on top, a
+   stage below it that slides menus in and out, and a hint strip at the bottom
+   standing in for the click wheel. No hardware, just the display.
+   --------------------------------------------------------------------------- */
+
+:root {
+    /* Dusk over water: deep indigo for the screen, the sunset running gold
+       into blush into dusty rose for anything that has to stand out. */
+    --gold: #ffd5a4;
+    --blush: #e9b6b5;
+    --rose: #ba7893;
+    --peri: #5a6cb8;
+    --indigo: #342d66;
+
+    --bg: #241f4a;
+    --screen: var(--indigo);
+    --screen-low: #2a2454;
+    --bar-hi: #4a4285;
+    --bar-low: #322b62;
+    --line: rgba(240, 234, 246, 0.14);
+    --text: #f0eaf6;
+    --dim: rgba(240, 234, 246, 0.56);
+    --dimmer: rgba(240, 234, 246, 0.32);
+
+    /* The selection is a muted terracotta - warm against a cool indigo is
+       near-complementary, so it stands out by hue rather than by brightness.
+       That is the whole trick: it sits at roughly the same lightness as the
+       periwinkle it replaced (and well below the gold bar that shouted), so it
+       reads as a cursor, not an alert. */
+    --sel-hi: #c06e5b;
+    --sel: #ac5c4b;
+    --sel-low: #8a4638;
+    --on-sel: #fdfbff;
+
+    --accent: var(--blush);
+    --ember: var(--blush);
+
+    --bar: 46px;
+    --hint: 30px;
+    /* every slide uses this - iOS-ish ease out, short enough to feel like firmware */
+    --slide: 320ms cubic-bezier(.32, .72, 0, 1);
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Abel", sans-serif;
-    scroll-behavior: smooth;
 }
 
-body{
+html,
+body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
     cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="%23FFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>'), auto;
-    background: #1f242d;
 }
 
-nav {
-    background-color: #1f242d;
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* --- the screen ---------------------------------------------------------- */
+
+.ipod {
     position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 1000;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
-}
-
-nav ul {
-    display: flex;
-    list-style: none;
-}
-
-nav ul li {
-    margin: 0 20px;
-}
-
-nav ul li a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-    font-weight: 600;
-    position: relative;
-    transition: color 0.3s ease;
-}
-
-nav ul li a::after {
-    content: '';
-    display: block;
-    width: 0;
-    height: 2px;
-    background: white;
-    transition: width 0.3s;
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-}
-
-nav ul li a:hover {
-    color: #ff7f50;
-}
-
-nav ul li a:hover::after {
-    width: 100%;
-}
-
-section {
+    inset: 0;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    background: var(--screen);
+}
+
+/* --- status bar ---------------------------------------------------------- */
+
+.ipod-bar {
+    flex: 0 0 var(--bar);
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     align-items: center;
-    text-align: center;
-    overflow-x: hidden;
-    padding: 60px 24px;
+    padding: 0 14px;
+    background: linear-gradient(180deg, var(--bar-hi), var(--bar-low));
+    border-bottom: 1px solid rgba(20, 16, 45, 0.6);
+    /* sits above the sliding screens so nothing passes over it */
+    z-index: 2;
 }
 
-.hero {
-    min-height: 100vh;
-    padding-top: 100px;
-}
-
-h1 {
-    position: relative;
-    font-size: 80px;
-    color: #fff;
-}
-
-p {
-    position: relative;
-    font-size: 35px;
+.ipod-title {
+    grid-column: 2;
+    font-size: 17px;
     font-weight: 600;
+    letter-spacing: 0.2px;
+    text-align: center;
+    animation: title-in 260ms ease both;
 }
 
-.section-heading {
+@keyframes title-in {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+/* the Menu button, standing in for the one that used to live on the wheel */
+.ipod-back {
+    grid-column: 1;
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    padding: 4px 8px 4px 4px;
+    border: 0;
+    border-radius: 5px;
+    background: none;
+    color: var(--dim);
+    font: inherit;
+    font-size: 14px;
+    text-decoration: none;
+    cursor: inherit;
+    transition: color 200ms ease;
+}
+
+.ipod-back:hover {
+    color: var(--ember);
+}
+
+.ipod-back[hidden] {
+    display: none;
+}
+
+.ipod-back svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* battery glyph: shell, nub on the right, coral fill inside */
+.ipod-battery {
     position: relative;
-    font-size: 64px;
-    color: #fff;
-    margin-bottom: 32px;
-    transition: color 0.3s ease;
+    grid-column: 3;
+    justify-self: end;
+    width: 24px;
+    height: 12px;
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    border-radius: 2px;
 }
 
-.identity-list::before {
+.ipod-battery::after {
+    content: '';
     position: absolute;
-    content: "";
-    width: 100%;
-    height: 100%;
-    background-color: #1f242d;;
-    top: 0;
-    left: 0;
-    animation: anim 4s infinite;
+    top: 3px;
+    right: -4px;
+    width: 2.5px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 0 1px 1px 0;
 }
 
-@keyframes anim {
-    40%, 60% {
-        left: calc(100% + 8px)
-    }
-    100% {
-        left: 0
-    }
+.ipod-battery::before {
+    content: '';
+    position: absolute;
+    top: 1.5px;
+    bottom: 1.5px;
+    left: 1.5px;
+    width: 62%;
+    background: var(--gold);
+    border-radius: 1px;
 }
 
-.reveal .animate {
-    opacity: 0;
-    filter: blur(5px);
-    transition: 0.7s;
+/* --- stage: holds the outgoing and incoming screen at the same time ------- */
+
+.ipod-stage {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
 }
 
-.reveal.show-animate .animate {
-    opacity: 1;
-    filter: blur(0);
+.ipod-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    background: var(--screen);
+    transition: transform var(--slide), opacity var(--slide);
 }
 
-.section-link{
-    text-decoration: underline;
-    color: inherit;
-}
-
-.section-link:hover h3 {
-    color: #ff7f50;
-}
-
-/*pop up*/
-.pop-up .animate {
-    transform: scale(.7);
-}
-
-.pop-up.show-animate .animate {
-    transform: scale(1);
-}
-
-.pop-up-hover {
-    transition: transform 0.3s ease;
-}
-
-.pop-up-hover:hover {
-    transform: scale(1.1);
-}
-
-
-/*left to right*/
-.left-to-right .animate {
-    transform: translateX(-100%);
-}
-
-.left-to-right.show-animate .animate {
-    transform: translateX(0);
-}
-
-/*left to right*/
-.right-to-left .animate {
+/* start positions - removed one frame after the screen is in the DOM */
+.ipod-screen.from-right {
     transform: translateX(100%);
 }
 
-.right-to-left.show-animate .animate {
-    transform: translateX(0);
+.ipod-screen.from-left {
+    transform: translateX(-100%);
 }
 
-.pop-up p, .left-to-right p, .right-to-left p{
-    color: #ff7f50;
+/* The screen being replaced parallaxes back at a third of the speed and dims
+   toward the screen colour, the way a pushed view does. It used to fade all
+   the way out, which left a blank panel showing through the gap for as long as
+   the incoming screen had not covered it yet. */
+.ipod-screen.to-left {
+    transform: translateX(-30%);
+    opacity: 0.6;
 }
 
-.experience {
-    padding-top: 80px;
+.ipod-screen.to-right {
+    transform: translateX(30%);
+    opacity: 0.6;
 }
 
-.timeline {
+/* only while a slide is actually running: the layer promotion and the edge
+   shadow both cost something to keep around on a screen full of photos */
+.ipod-screen.is-sliding {
+    will-change: transform;
+    box-shadow: -16px 0 30px rgba(20, 16, 45, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .ipod-screen {
+        transition: opacity 120ms ease;
+    }
+
+    .ipod-screen.from-right,
+    .ipod-screen.from-left {
+        transform: none;
+        opacity: 0;
+    }
+
+    .ipod-screen.to-left,
+    .ipod-screen.to-right {
+        transform: none;
+        opacity: 0;
+    }
+
+    .ipod-title {
+        animation: none;
+    }
+}
+
+/* --- menu screen: list on the left, preview that follows the highlight ---- */
+
+.ipod-list {
+    flex: 0 0 56%;
+    list-style: none;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border-right: 1px solid var(--line);
+}
+
+.ipod-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 14px;
+    padding: 15px 14px 15px 18px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.055);
+    color: var(--text);
+    font-size: 19px;
+    text-decoration: none;
+    /* the highlight was instant on the real thing - no transition */
+}
+
+.ipod-row.is-sel {
+    background: linear-gradient(180deg, var(--sel-hi) 0%, var(--sel) 42%, var(--sel-low) 100%);
+    color: var(--on-sel);
+    text-shadow: 0 1px 1px rgba(20, 16, 45, 0.4);
+}
+
+/* a quiet heading inside a list, for splitting a menu into groups */
+.ipod-group {
+    padding: 16px 16px 6px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--dimmer);
+}
+
+.ipod-empty {
+    padding: 26px 20px;
+    font-size: 16px;
+    color: var(--dim);
+}
+
+.ipod-label {
+    /* lets a long label wrap instead of shoving the chevron off the row */
+    min-width: 0;
+    line-height: 1.3;
+}
+
+.ipod-chev {
+    flex: none;
+    font-size: 22px;
+    line-height: 1;
+    opacity: 0.4;
+}
+
+.ipod-row.is-sel .ipod-chev {
+    opacity: 1;
+}
+
+/* a drawn glyph in the chevron slot, rather than a font character that may
+   not exist on the reader's machine */
+.ipod-chev.is-icon {
+    display: flex;
+    align-items: center;
+}
+
+.ipod-chev svg {
+    width: 15px;
+    height: 15px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* right half - one card per row, cross faded as the highlight moves */
+.ipod-preview {
+    position: relative;
+    flex: 1;
+    background: linear-gradient(180deg, #3b3472, var(--screen-low));
+}
+
+.ipod-card {
+    position: absolute;
+    inset: 0;
     display: flex;
     flex-direction: column;
-    gap: 22px;
-    width: 100%;
-    max-width: 640px;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+    padding: 26px;
+    text-align: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 220ms ease;
 }
 
-.timeline-item {
-    text-align: left;
-    padding: 18px 26px;
-    border-left: 3px solid #ff7f50;
-    background: rgba(255, 255, 255, 0.04);
-    border-radius: 6px;
+.ipod-card.is-shown {
+    opacity: 1;
 }
 
-.timeline-item h3 {
-    position: relative;
-    font-size: 26px;
-    color: #fff;
-    display: inline-block;
-}
-
-.timeline-date {
-    display: block;
-    margin-top: 4px;
-    font-size: 16px;
+.ipod-card-title {
+    font-size: 25px;
     font-weight: 600;
-    color: #ff7f50;
+    line-height: 1.2;
+    color: var(--ember);
 }
 
-/*gallery page - cover flow*/
-/* every measurement below is a ratio of the cover, so the whole shelf
-   shrinks to fit short viewports and the caption stays above the fold */
+.ipod-card-sub {
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--dim);
+}
+
+/* square tile standing in for album art */
+.ipod-art {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: min(190px, 42vh);
+    aspect-ratio: 1;
+    border-radius: 5px;
+    background: linear-gradient(145deg, #4b4489, #2b2456);
+    box-shadow: 0 14px 30px rgba(20, 16, 45, 0.5);
+    font-size: 46px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: var(--ember);
+    overflow: hidden;
+}
+
+.ipod-art img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.ipod-art svg {
+    width: 44%;
+    height: 44%;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* the rotating job title, wiped left to right the way the old hero did it */
+.identity-list {
+    display: inline-block;
+    animation: identity-cycle 4s infinite;
+}
+
+/* the word is swapped on animationiteration, at the moment it is invisible */
+@keyframes identity-cycle {
+    0%, 6% {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    16%, 84% {
+        opacity: 1;
+        transform: none;
+    }
+
+    94%, 100% {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+}
+
+/* --- detail screen: art on the left, the writeup beside it --------------- */
+
+.ipod-detail {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 44px;
+    padding: 40px 48px;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    background: linear-gradient(180deg, var(--screen), var(--screen-low));
+}
+
+.ipod-detail .ipod-art {
+    flex: none;
+    width: min(260px, 30vw);
+}
+
+.ipod-text {
+    min-width: 0;
+}
+
+.ipod-text h2 {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.15;
+}
+
+.ipod-text .ipod-sub {
+    margin-top: 8px;
+    font-size: 18px;
+    color: var(--ember);
+}
+
+.ipod-text p {
+    margin-top: 18px;
+    max-width: 52ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* the little pill row for tech / tags */
+.ipod-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 22px;
+    list-style: none;
+}
+
+.ipod-tags li {
+    padding: 5px 11px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--dim);
+}
+
+/* --- hint strip, in place of the click wheel ----------------------------- */
+
+.ipod-hint {
+    flex: 0 0 var(--hint);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    background: var(--screen-low);
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    letter-spacing: 0.3px;
+    color: var(--dimmer);
+    z-index: 2;
+}
+
+.ipod-hint kbd {
+    font: inherit;
+    color: var(--dim);
+}
+
+@media (max-width: 760px) {
+    .ipod-preview {
+        display: none;
+    }
+
+    .ipod-list {
+        flex: 1;
+        border-right: 0;
+    }
+
+    .ipod-row {
+        flex-wrap: wrap;
+        padding: 13px 14px 13px 16px;
+        font-size: 17px;
+    }
+
+    /* no room for the preview, so the date rides along in the row instead */
+    .ipod-row[data-sub]::after {
+        content: attr(data-sub);
+        flex-basis: 100%;
+        margin-top: 3px;
+        font-size: 13px;
+        color: var(--ember);
+    }
+
+    .ipod-row.is-sel[data-sub]::after {
+        color: rgba(253, 251, 255, 0.82);
+    }
+
+    .ipod-detail {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+        padding: 28px 22px;
+    }
+
+    .ipod-detail .ipod-art {
+        width: 140px;
+        font-size: 34px;
+    }
+
+    .ipod-text h2 {
+        font-size: 26px;
+    }
+
+    .ipod-hint {
+        display: none;
+    }
+}
+
+/* --- gallery screen: cover flow ------------------------------------------ */
+/* every measurement is a ratio of the cover, so the shelf shrinks to fit the
+   screen instead of pushing the reflection past the bottom edge */
+.ipod-screen[data-screen="gallery"] {
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(180deg, var(--indigo), #16123a);
+}
+
 .coverflow {
-    --cf-size: min(660px, 76vh - 140px);
+    --cf-size: min(560px, 62vh, 64vw);
     position: relative;
     width: 100%;
-    /* cover + the shortened reflection under it */
+    /* cover plus the shortened reflection under it */
     height: calc(var(--cf-size) * 1.3);
     perspective: calc(var(--cf-size) * 3.125);
     perspective-origin: 50% 34%;
@@ -232,7 +569,8 @@ p {
     position: absolute;
     inset: 0;
     transform-style: preserve-3d;
-    /* stage plane sits at z:0, in front of the fanned-back photos, and would swallow their clicks */
+    /* the stage plane sits at z:0, in front of the fanned back photos, and
+       would otherwise swallow their clicks */
     pointer-events: none;
 }
 
@@ -243,14 +581,20 @@ p {
     width: var(--cf-size);
     height: var(--cf-size);
     margin: calc(var(--cf-size) * -0.588) 0 0 calc(var(--cf-size) * -0.5);
-    /* hidden until layout() marks it near: keeps off-stage covers from
-       flashing on load, and keeps the browser from painting 29 covers
-       nobody can see. visibility flips only after the fade finishes */
+    /* hidden until layout() marks it near: keeps off stage covers from
+       flashing on load, and keeps the browser from painting 35 covers nobody
+       can see. visibility flips only after the fade finishes */
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
-    cursor: pointer;
     transition: transform 0.55s cubic-bezier(.25, .8, .25, 1), opacity 0.55s ease, visibility 0s linear 0.55s;
+}
+
+/* The shelf is dealt into place with transitions off, so arriving at the
+   gallery does not set a 0.55s fan-out running underneath the screen slide -
+   two animations of different lengths overlapping was the whole problem. */
+.cf-stage.no-anim .cf-item {
+    transition: none;
 }
 
 .cf-item.is-near {
@@ -269,7 +613,7 @@ p {
     /* stands in for a cover that has not been fetched yet */
     background: rgba(255, 255, 255, 0.05);
     box-shadow: 0 18px 36px rgba(0, 0, 0, 0.55);
-    /* mask cuts the reflection off at ~24% of the cover, just above the caption */
+    /* the mask cuts the reflection off at ~24% of the cover */
     -webkit-box-reflect: below 6px linear-gradient(transparent 76%, rgba(0, 0, 0, 0.35));
 }
 
@@ -287,15 +631,15 @@ p {
     border: 0;
     background: none;
     color: #fff;
-    opacity: 0.7;
-    cursor: pointer;
+    opacity: 0.65;
+    cursor: inherit;
     transform: translateY(-50%);
     transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .cf-nav svg {
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.5;
@@ -306,50 +650,34 @@ p {
 
 .cf-nav:hover:not(:disabled) {
     opacity: 1;
-    color: #ff7f50;
+    color: var(--ember);
 }
 
 .cf-nav:disabled {
-    opacity: 0.15;
-    cursor: default;
+    opacity: 0.14;
 }
 
 .cf-prev {
-    left: max(12px, 50% - var(--cf-size) * 1.15);
+    left: max(10px, 50% - var(--cf-size) * 1.15);
 }
 
 .cf-next {
-    right: max(12px, 50% - var(--cf-size) * 1.15);
+    right: max(10px, 50% - var(--cf-size) * 1.15);
 }
 
-/* hidden, but still filled in by layout() - data-title stays on each cover
-   and feeds the full screen viewer's alt text. Drop this line to show it */
-.cf-caption {
-    display: none;
-    margin-top: 14px;
-    font-size: 36px;
-    font-weight: 700;
-    /* Abel ships a single weight, so thicken the strokes ourselves */
-    -webkit-text-stroke: 0.6px currentColor;
-    color: #ff7f50;
-}
-
-@media (max-width: 700px) {
+@media (max-width: 760px) {
     .coverflow {
-        --cf-size: min(360px, 70vh - 110px);
+        --cf-size: min(320px, 56vh, 74vw);
     }
 
     .cf-nav svg {
-        width: 30px;
-        height: 30px;
-    }
-
-    .cf-caption {
-        font-size: 28px;
+        width: 28px;
+        height: 28px;
     }
 }
 
-/*gallery page - full screen viewer*/
+/* --- gallery: full screen viewer ----------------------------------------- */
+
 .cf-lightbox[hidden] {
     display: none;
 }
@@ -362,13 +690,12 @@ p {
     justify-content: center;
     align-items: center;
     padding: 40px;
-    background: rgba(0, 0, 0, 0.88);
+    background: rgba(26, 21, 56, 0.92);
     backdrop-filter: blur(6px);
-    /* keep a trackpad flick from scrolling the page behind the viewer */
+    /* keep a trackpad flick from scrolling anything behind the viewer */
     overscroll-behavior: contain;
     opacity: 0;
     transition: opacity 0.3s ease;
-    cursor: zoom-out;
 }
 
 .cf-lightbox.is-open {
@@ -383,7 +710,6 @@ p {
     box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
     transform: scale(0.96);
     transition: transform 0.3s cubic-bezier(.25, .8, .25, 1);
-    cursor: default;
 }
 
 .cf-lightbox.is-open .cf-lightbox-img {
@@ -392,20 +718,20 @@ p {
 
 .cf-lightbox-close {
     position: absolute;
-    top: 24px;
-    right: 28px;
+    top: 22px;
+    right: 26px;
     padding: 0;
     border: 0;
     background: none;
     color: #fff;
     opacity: 0.7;
-    cursor: pointer;
+    cursor: inherit;
     transition: opacity 0.3s ease, color 0.3s ease;
 }
 
 .cf-lightbox-close svg {
-    width: 34px;
-    height: 34px;
+    width: 32px;
+    height: 32px;
     fill: none;
     stroke: currentColor;
     stroke-width: 2.5;
@@ -414,10 +740,10 @@ p {
 
 .cf-lightbox-close:hover {
     opacity: 1;
-    color: #ff7f50;
+    color: var(--ember);
 }
 
-@media (max-width: 700px) {
+@media (max-width: 760px) {
     .cf-lightbox {
         padding: 16px;
     }
@@ -426,4 +752,27 @@ p {
         top: 12px;
         right: 14px;
     }
+}
+
+/* --- no script: the screens are still plain linked pages ----------------- */
+
+.no-js .ipod-hint {
+    display: none;
+}
+
+/* nothing drives the highlight or the preview cards without scripting, so the
+   menu falls back to a plain full width list that lights up on hover */
+.no-js .ipod-preview {
+    display: none;
+}
+
+.no-js .ipod-list {
+    flex: 1;
+    border-right: 0;
+}
+
+.no-js .ipod-row:hover {
+    background: linear-gradient(180deg, var(--sel-hi) 0%, var(--sel) 42%, var(--sel-low) 100%);
+    color: var(--on-sel);
+    text-shadow: 0 1px 1px rgba(20, 16, 45, 0.4);
 }

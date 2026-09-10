@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- The screen, and nothing but the screen: status bar, the stage the
+         menus slide through, and a hint strip where the wheel used to be. -->
+    <div class="ipod">
+
+        <div class="ipod-bar">
+            <a class="ipod-back" href="index.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+                <span>Menu</span>
+            </a>
+            <span class="ipod-title">About</span>
+            <span class="ipod-battery" aria-hidden="true"></span>
+        </div>
+
+        <div class="ipod-stage">
+            <!-- detail screen: album art on the left, the writeup beside it -->
+            <main class="ipod-screen" data-hint="esc;menu" data-screen="detail" data-title="About" data-parent="index.html">
+                <div class="ipod-detail">
+                    <div class="ipod-art"><img src="thumbs/profile.jpg" alt="Daniel Park"></div>
+                    <div class="ipod-text">
+                        <h2>Daniel Park</h2>
+                        <p class="ipod-sub"><span class="identity-list" data-words="Software Developer|CMU 2029|Systems Developer">Software Developer</span></p>
+                        <!-- write-up goes here -->
+                        <p>Write-up coming soon.</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div class="ipod-hint">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> browse</span>
+            <span><kbd>&crarr;</kbd> select</span>
+            <span><kbd>esc</kbd> menu</span>
+        </div>
+
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="ipod.js"></script>
+</body>
+
+</html>

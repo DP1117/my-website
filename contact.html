@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
     <meta charset="UTF-8">
@@ -9,15 +9,79 @@
 </head>
 
 <body>
-    
-    <nav>
-        <ul>
-            <li><a href="index.html#home">Home</a></li>
-            <li><a href="index.html#experience">Experience</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
 
-    <script src="script.js"></script>
+    <!-- The screen, and nothing but the screen: status bar, the stage the
+         menus slide through, and a hint strip where the wheel used to be. -->
+    <div class="ipod">
+
+        <div class="ipod-bar">
+            <a class="ipod-back" href="index.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+                <span>Menu</span>
+            </a>
+            <span class="ipod-title">Contact</span>
+            <span class="ipod-battery" aria-hidden="true"></span>
+        </div>
+
+        <div class="ipod-stage">
+            <!-- menu screen: the list drives the highlight, the panel on the
+                 right follows it, exactly one card shown at a time -->
+            <main class="ipod-screen" data-screen="menu" data-title="Contact" data-parent="index.html">
+
+                <ul class="ipod-list">
+                    <li>
+                        <a class="ipod-row" href="https://github.com/DP1117" target="_blank" rel="noopener" data-preview="c-github" data-sub="github.com/DP1117">
+                            <span class="ipod-label">GitHub</span>
+                            <span class="ipod-chev" aria-hidden="true">&#8599;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ipod-row" href="https://www.linkedin.com/in/daniel-park-349321275/" target="_blank" rel="noopener" data-preview="c-linkedin" data-sub="linkedin.com/in/daniel-park">
+                            <span class="ipod-label">LinkedIn</span>
+                            <span class="ipod-chev" aria-hidden="true">&#8599;</span>
+                        </a>
+                    </li>
+                    <!-- the href keeps this working without scripting; with it, the
+                         click is intercepted and the address is copied instead -->
+                    <li>
+                        <a class="ipod-row" href="mailto:dpark070111@gmail.com" data-copy="dpark070111@gmail.com" data-preview="c-email" data-sub="click to copy">
+                            <span class="ipod-label">Email</span>
+                            <span class="ipod-chev is-icon" aria-hidden="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"></rect><path d="M15 5.5V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h.5"></path></svg></span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="ipod-preview" aria-hidden="true">
+                    <div class="ipod-card" id="c-github">
+                        <div class="ipod-art"><img src="thumbs/github.jpg" alt=""></div>
+                        <span class="ipod-card-title">GitHub</span>
+                        <span class="ipod-card-sub">github.com/DP1117</span>
+                    </div>
+                    <div class="ipod-card" id="c-linkedin">
+                        <div class="ipod-art"><img src="thumbs/linkedin.jpg" alt=""></div>
+                        <span class="ipod-card-title">LinkedIn</span>
+                        <span class="ipod-card-sub">Roles and internships, kept up to date there</span>
+                    </div>
+                    <div class="ipod-card" id="c-email">
+                        <div class="ipod-art"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="5" width="19" height="14" rx="2"></rect><path d="m3 6.5 9 6.5 9-6.5"></path></svg></div>
+                        <span class="ipod-card-title">Email</span>
+                        <span class="ipod-card-sub">dpark070111@gmail.com<br>click to copy</span>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+
+        <div class="ipod-hint">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> browse</span>
+            <span><kbd>&crarr;</kbd> select</span>
+            <span><kbd>esc</kbd> menu</span>
+        </div>
+
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="ipod.js"></script>
 </body>
+
+</html>

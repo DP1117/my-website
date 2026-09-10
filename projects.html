@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- The screen, and nothing but the screen: status bar, the stage the
+         menus slide through, and a hint strip where the wheel used to be. -->
+    <div class="ipod">
+
+        <div class="ipod-bar">
+            <a class="ipod-back" href="index.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+                <span>Menu</span>
+            </a>
+            <span class="ipod-title">Projects</span>
+            <span class="ipod-battery" aria-hidden="true"></span>
+        </div>
+
+        <div class="ipod-stage">
+            <!-- Projects: a track listing, grouped. Rows are plain divs, not
+                 links - selecting one moves the preview panel, there is nothing
+                 to open. Uncomment the blocks below and fill them in. -->
+            <main class="ipod-screen" data-hint="esc;menu" data-screen="menu" data-title="Projects" data-parent="index.html">
+
+                <ul class="ipod-list">
+                    <li class="ipod-empty">No projects listed yet.</li>
+
+                    <!-- <li class="ipod-group">Completed</li>
+                    <li>
+                        <div class="ipod-row" data-preview="j-redis" data-sub="C">
+                            <span class="ipod-label">Redis clone</span>
+                        </div>
+                    </li>
+
+                    <li class="ipod-group">In progress</li>
+                    <li>
+                        <div class="ipod-row" data-preview="j-editor" data-sub="C">
+                            <span class="ipod-label">Text editor</span>
+                        </div>
+                    </li> -->
+                </ul>
+
+                <div class="ipod-preview" aria-hidden="true">
+                    <!-- shown outright while the list is empty; once there are
+                         rows, the highlight decides which card is up -->
+                    <div class="ipod-card is-shown" id="j-none">
+                        <div class="ipod-art"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"></path><path d="m15 6 6 6-6 6"></path></svg></div>
+                        <span class="ipod-card-title">Projects</span>
+                        <span class="ipod-card-sub">Coming soon</span>
+                    </div>
+
+                    <!-- <div class="ipod-card" id="j-redis">
+                        <div class="ipod-art"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"></path><path d="m15 6 6 6-6 6"></path></svg></div>
+                        <span class="ipod-card-title">Redis clone</span>
+                        <span class="ipod-card-sub">RESP protocol, key expiry, persistence<br>C</span>
+                    </div>
+
+                    <div class="ipod-card" id="j-editor">
+                        <div class="ipod-art"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18-6-6 6-6"></path><path d="m15 6 6 6-6 6"></path></svg></div>
+                        <span class="ipod-card-title">Text editor</span>
+                        <span class="ipod-card-sub">Terminal editor built from scratch<br>C</span>
+                    </div> -->
+                </div>
+
+            </main>
+        </div>
+
+        <div class="ipod-hint">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> browse</span>
+            <span><kbd>&crarr;</kbd> select</span>
+            <span><kbd>esc</kbd> menu</span>
+        </div>
+
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="ipod.js"></script>
+</body>
+
+</html>

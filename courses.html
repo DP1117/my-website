@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Courses</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- The screen, and nothing but the screen: status bar, the stage the
+         menus slide through, and a hint strip where the wheel used to be. -->
+    <div class="ipod">
+
+        <div class="ipod-bar">
+            <a class="ipod-back" href="index.html">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+                <span>Menu</span>
+            </a>
+            <span class="ipod-title">Courses</span>
+            <span class="ipod-battery" aria-hidden="true"></span>
+        </div>
+
+        <div class="ipod-stage">
+            <!-- Courses: a track listing. Rows are plain divs, not links -
+                 selecting one just moves the preview panel, there is nothing
+                 to open. Copy the commented block per course. -->
+            <main class="ipod-screen" data-hint="esc;menu" data-screen="menu" data-title="Courses" data-parent="index.html">
+
+                <ul class="ipod-list">
+                    <li class="ipod-empty">No courses listed yet.</li>
+
+                    <!-- <li>
+                        <div class="ipod-row" data-preview="c-1" data-sub="Fall 2025">
+                            <span class="ipod-label">15-112 Fundamentals of Programming</span>
+                        </div>
+                    </li> -->
+                </ul>
+
+                <div class="ipod-preview" aria-hidden="true">
+                    <!-- the card is shown outright while the list is empty; once
+                         there are rows, the highlight takes over which one shows -->
+                    <div class="ipod-card is-shown" id="c-none">
+                        <div class="ipod-art"><img src="thumbs/cmu.jpg" alt=""></div>
+                        <span class="ipod-card-title">Courses</span>
+                        <span class="ipod-card-sub">Coming soon</span>
+                    </div>
+
+                    <!-- <div class="ipod-card" id="c-1">
+                        <div class="ipod-art"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 8.5 12 4l9.5 4.5L12 13z"></path><path d="M6.5 10.5V16c0 1.7 2.5 3 5.5 3s5.5-1.3 5.5-3v-5.5"></path></svg></div>
+                        <span class="ipod-card-title">15-112</span>
+                        <span class="ipod-card-sub">Fundamentals of Programming<br>Fall 2025</span>
+                    </div> -->
+                </div>
+
+            </main>
+        </div>
+
+        <div class="ipod-hint">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> browse</span>
+            <span><kbd>&crarr;</kbd> select</span>
+            <span><kbd>esc</kbd> menu</span>
+        </div>
+
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="ipod.js"></script>
+</body>
+
+</html>

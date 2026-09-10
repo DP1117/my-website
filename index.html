@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="no-js">
 
 <head>
     <meta charset="UTF-8">
@@ -9,53 +9,99 @@
 </head>
 
 <body>
-    
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#experience">Experience</a></li>
-            <li><a href="gallery.html">Gallery</a></li>
-            <li><a href="contact.html">Contact</a></li>
-        </ul>
-    </nav>
 
-    <section class="hero pop-up reveal" id="home">
-        <div class="animate">
-            <h1>
-                Hi, I'm Daniel Park
-            </h1>
-            <p>
-                <span class="identity-list">
-                    Software Developer
-                </span>
-            </p>
+    <!-- The screen, and nothing but the screen: status bar, the stage the
+         menus slide through, and a hint strip where the wheel used to be. -->
+    <div class="ipod">
+
+        <div class="ipod-bar">
+            <a class="ipod-back" href="index.html" hidden>
+                <svg viewBox="0 0 24 24" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+                <span>Menu</span>
+            </a>
+            <span class="ipod-title">dPod</span>
+            <span class="ipod-battery" aria-hidden="true"></span>
         </div>
-    </section>
 
-    <section class="hero experience" id="experience">
-        <h2 class="section-heading">Experience</h2>
-        <div class="timeline">
-            <div class="timeline-item left-to-right reveal">
-                <div class="animate">
-                    <a href="stuyvesant.html" class="section-link">
-                        <h3 class="pop-up-hover">Stuyvesant High School</h3>
-                    </a>
-                    <span class="timeline-date">Class of 2025</span>
-                </div>
-            </div>
+        <div class="ipod-stage">
+            <!-- menu screen: the list drives the highlight, the panel on the
+                 right follows it, exactly one card shown at a time -->
+            <main class="ipod-screen" data-hint="&uarr; &darr;;browse|&crarr;;select" data-screen="menu" data-title="dPod" data-parent="">
 
-            <div class="timeline-item right-to-left reveal">
-                <div class="animate">
-                    <a href="bloomberg.html" class="section-link">
-                        <h3 class="pop-up-hover">Bloomberg Software Engineer Intern</h3>
-                    </a>
-                    <span class="timeline-date">July - August 2024</span>
+                <ul class="ipod-list">
+                    <li>
+                        <a class="ipod-row" href="about.html" data-preview="p-about" data-sub="Daniel Park">
+                            <span class="ipod-label">About</span>
+                            <span class="ipod-chev" aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ipod-row" href="projects.html" data-preview="p-projects" data-sub="Built and building">
+                            <span class="ipod-label">Projects</span>
+                            <span class="ipod-chev" aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ipod-row" href="courses.html" data-preview="p-courses" data-sub="Relevant coursework">
+                            <span class="ipod-label">Courses</span>
+                            <span class="ipod-chev" aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ipod-row" href="gallery.html" data-preview="p-gallery" data-sub="35 photos">
+                            <span class="ipod-label">Gallery</span>
+                            <span class="ipod-chev" aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="ipod-row" href="contact.html" data-preview="p-contact" data-sub="Email &middot; GitHub &middot; LinkedIn">
+                            <span class="ipod-label">Contact</span>
+                            <span class="ipod-chev" aria-hidden="true">&rsaquo;</span>
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="ipod-preview" aria-hidden="true">
+                    <div class="ipod-card" id="p-about">
+                        <div class="ipod-art"><img src="thumbs/profile.jpg" alt=""></div>
+                        <span class="ipod-card-title">Daniel Park</span>
+                        <span class="ipod-card-sub"><span class="identity-list" data-words="Software Developer|CMU 2029|Systems Developer">Software Developer</span></span>
+                    </div>
+                    <div class="ipod-card" id="p-projects">
+                        <div class="ipod-art"><img src="thumbs/projects.jpg" alt=""></div>
+                        <span class="ipod-card-title">Projects</span>
+                        <span class="ipod-card-sub">Finished, and still in progress</span>
+                    </div>
+                    <div class="ipod-card" id="p-courses">
+                        <div class="ipod-art"><img src="thumbs/cmu.jpg" alt=""></div>
+                        <span class="ipod-card-title">Courses</span>
+                        <span class="ipod-card-sub">Relevant coursework</span>
+                    </div>
+                    <div class="ipod-card" id="p-gallery">
+                        <div class="ipod-art"><img src="thumbs/gallery.jpg" alt=""></div>
+                        <span class="ipod-card-title">Gallery</span>
+                        <span class="ipod-card-sub">A glimpse into my life, in coverflow</span>
+                    </div>
+                    <div class="ipod-card" id="p-contact">
+                        <div class="ipod-art"><img src="thumbs/contact.jpg" alt=""></div>
+                        <span class="ipod-card-title">Contact</span>
+                        <span class="ipod-card-sub">Say hello</span>
+                    </div>
                 </div>
-            </div>
+
+            </main>
         </div>
-    </section>
 
-    <script src="script.js"></script>
+        <div class="ipod-hint">
+            <span><kbd>&uarr;</kbd> <kbd>&darr;</kbd> browse</span>
+            <span><kbd>&crarr;</kbd> select</span>
+            <span><kbd>esc</kbd> menu</span>
+        </div>
+
+    </div>
+
+    <script src="gallery.js"></script>
+    <script src="ipod.js"></script>
 </body>
 
 </html>
